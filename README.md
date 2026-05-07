@@ -1,77 +1,115 @@
-# MS-KPI - Grupo Cordillera
+markdown# MS-KPI - Grupo Cordillera
 
-## 📌 Descripción
-Microservicio de Gestión de Indicadores KPI.
-Calcula y gestiona métricas estratégicas en tiempo real para
-la Plataforma de Monitoreo Inteligente del Grupo Cordillera.
+Microservicio de gestión de indicadores clave de desempeño (KPIs) del Grupo Cordillera.
 
-## 🎯 Patrón aplicado
-- **Repository Pattern**: Abstrae el acceso a la base de datos,
-  permitiendo cambiar el motor de BD sin afectar la lógica de negocio.
-
-## ⚙️ Tecnologías
+## Tecnologías
 - Java 17
-- Spring Boot 3.5.14
+- Spring Boot 3.3.5
 - Spring Data JPA
+- Spring Actuator
 - MySQL 8.0
+- Docker
 - Lombok
 - Maven
 
-## 📁 Estructura del proyecto
-ms-kpi/
-├── controller/   → KpiController (endpoints REST)
-├── service/      → KpiService (lógica de negocio)
-├── repository/   → KpiRepository (acceso a datos)
-├── model/        → Kpi (entidad JPA)
-└── dto/          → KpiRequestDTO, KpiResponseDTO
+## Patrones Aplicados
+- **Repository Pattern**: Abstrae el acceso a la base de datos
+- **DTO Pattern**: Separa el modelo interno de la API
+- **Builder Pattern**: Construcción de entidades con Lombok @Builder
 
-## 📊 Tipos de KPI disponibles
-| Tipo | Descripción |
-|------|-------------|
-| VENTAS | Métricas de ventas por sucursal |
-| RENTABILIDAD | Indicadores financieros |
-| INVENTARIO | Estado del stock |
-| LOGISTICA | Métricas operativas |
+## Requisitos
+- Java 17
+- Docker Desktop
+- Maven
 
-## 🌐 Endpoints disponibles
-| Método | URL | Descripción |
-|--------|-----|-------------|
-| GET | /api/kpis | Lista todos los KPIs |
-| GET | /api/kpis/{id} | Busca KPI por ID |
+## Instalación y Ejecución
+
+### 1. Clonar el repositorio
+```bash
+git clone 
+cd ms-kpi
+```
+
+### 2. Levantar MySQL con Docker
+```bash
+docker-compose up -d
+```
+
+### 3. Ejecutar el microservicio
+```bash
+.\mvnw spring-boot:run
+```
+
+El servicio quedará disponible en `http://localhost:8082`
+
+## Endpoints
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| GET | /api/kpis | Listar todos los KPIs |
+| GET | /api/kpis/{id} | Buscar KPI por ID |
 | GET | /api/kpis/tipo/{tipo} | KPIs por tipo |
 | GET | /api/kpis/area/{area} | KPIs por área |
-| POST | /api/kpis | Crea nuevo KPI |
-| PUT | /api/kpis/{id} | Actualiza KPI |
-| DELETE | /api/kpis/{id} | Elimina KPI |
+| POST | /api/kpis | Crear nuevo KPI |
+| PUT | /api/kpis/{id} | Actualizar KPI |
+| DELETE | /api/kpis/{id} | Eliminar KPI |
 
-## 📦 Ejemplo POST /api/kpis
+## Ejemplo de uso
+
+### Crear KPI
 ```json
+POST /api/kpis
 {
-  "tipo": "VENTAS",
-  "valor": 125000.00,
-  "fecha": "2026-04-30",
-  "area": "FINANZAS",
-  "estado": "AMARILLO"
+    "tipo": "VENTAS",
+    "valor": 1000000.00,
+    "fecha": "2026-05-07",
+    "area": "COMERCIAL",
+    "estado": "VERDE"
 }
 ```
 
-## 🐳 Cómo ejecutar con Docker
-```bash
-docker-compose up -d
-mvn spring-boot:run
+### Tipos disponibles
+| Tipo | Descripción |
+|------|-------------|
+| VENTAS | KPI de ventas |
+| RENTABILIDAD | KPI de rentabilidad |
+| INVENTARIO | KPI de inventario |
+| LOGISTICA | KPI de logística |
+
+### Estados disponibles
+| Estado | Descripción |
+|--------|-------------|
+| VERDE | Óptimo |
+| AMARILLO | Precaución |
+| ROJO | Crítico |
+
+## Estructura del proyecto
+ms-kpi/
+├── src/
+│   ├── main/
+│   │   ├── java/com/cordillera/mskpi/
+│   │   │   ├── controller/
+│   │   │   │   └── KpiController.java
+│   │   │   ├── dto/
+│   │   │   │   ├── KpiRequestDTO.java
+│   │   │   │   └── KpiResponseDTO.java
+│   │   │   ├── exception/
+│   │   │   │   └── ResourceNotFoundException.java
+│   │   │   ├── model/
+│   │   │   │   └── Kpi.java
+│   │   │   ├── repository/
+│   │   │   │   └── KpiRepository.java
+│   │   │   └── service/
+│   │   │       └── KpiService.java
+│   │   └── resources/
+│   │       └── application.properties
+│   └── test/
+├── docker-compose.yml
+├── pom.xml
+└── README.md
+
+## Monitoreo
 ```
-
-## 💻 Cómo ejecutar sin Docker
-1. Iniciar MySQL (XAMPP)
-2. Crear base de datos: `ms_kpi_db`
-3. Ejecutar: `mvn spring-boot:run`
-4. Servidor en: http://localhost:8082
-
-## ✅ Requisitos
-- Java 17+
-- Maven
-- MySQL 8.0 o Docker
-
-## 👥 Autores
-- Janet Huaylla Huayllas
-- Bairo Pasten Codoceo
+GET http://localhost:8082/actuator/health
+GET http://localhost:8082/actuator/info
+```
