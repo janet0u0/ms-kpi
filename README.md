@@ -1,4 +1,4 @@
-markdown# MS-KPI - Grupo Cordillera
+MS-KPI - Grupo Cordillera
 
 Microservicio de gestión de indicadores clave de desempeño (KPIs) del Grupo Cordillera.
 
