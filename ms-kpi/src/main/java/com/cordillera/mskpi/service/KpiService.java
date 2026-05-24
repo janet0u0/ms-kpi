@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Servicio de Gestión de KPIs - MS-KPI
- * Contiene la lógica de negocio del microservicio.
+ * Grupo Cordillera
  *
  * Patrón aplicado: Repository Pattern
  * Accede a datos exclusivamente a través de KpiRepository,
@@ -53,14 +53,16 @@ public class KpiService {
         return mapToDTO(kpi);
     }
 
+    // ✅ CORREGIDO: usa @Builder en vez de setters
     public KpiResponseDTO guardar(KpiRequestDTO dto) {
         log.info("Creando nuevo KPI de tipo: {}", dto.getTipo());
-        Kpi kpi = new Kpi();
-        kpi.setTipo(dto.getTipo());
-        kpi.setValor(dto.getValor());
-        kpi.setFecha(dto.getFecha());
-        kpi.setArea(dto.getArea());
-        kpi.setEstado(dto.getEstado());
+        Kpi kpi = Kpi.builder()
+                .tipo(dto.getTipo())
+                .valor(dto.getValor())
+                .fecha(dto.getFecha())
+                .area(dto.getArea())
+                .estado(dto.getEstado())
+                .build();
         return mapToDTO(repository.save(kpi));
     }
 
@@ -97,6 +99,15 @@ public class KpiService {
     public List<KpiResponseDTO> listarPorArea(String area) {
         log.info("Buscando KPIs del área: {}", area);
         return repository.findByArea(area)
+                .stream()
+                .map(this::mapToDTO)
+                .toList();
+    }
+
+    // ✅ AGREGADO: método para el endpoint /estado/{estado}
+    public List<KpiResponseDTO> listarPorEstado(String estado) {
+        log.info("Buscando KPIs por estado: {}", estado);
+        return repository.findByEstado(estado)
                 .stream()
                 .map(this::mapToDTO)
                 .toList();
