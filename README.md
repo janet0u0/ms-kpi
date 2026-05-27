@@ -84,6 +84,9 @@ POST /api/kpis
 | ROJO | Crítico |
 
 ## Estructura del proyecto
+## Estructura del proyecto
+
+```text
 ms-kpi/
 ├── src/
 │   ├── main/
@@ -107,6 +110,7 @@ ms-kpi/
 ├── docker-compose.yml
 ├── pom.xml
 └── README.md
+```
 
 ## Monitoreo
 ```
