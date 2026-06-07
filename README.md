@@ -1,8 +1,8 @@
-MS-KPI - Grupo Cordillera
+# 📈 MS-KPI - Grupo Cordillera
 
 Microservicio de gestión de indicadores clave de desempeño (KPIs) del Grupo Cordillera.
 
-## Tecnologías
+## 🛠️ Tecnologías
 - Java 17
 - Spring Boot 3.3.5
 - Spring Data JPA
@@ -12,37 +12,43 @@ Microservicio de gestión de indicadores clave de desempeño (KPIs) del Grupo Co
 - Lombok
 - Maven
 
-## Patrones Aplicados
+## 🎯 Patrones Aplicados
 - **Repository Pattern**: Abstrae el acceso a la base de datos
 - **DTO Pattern**: Separa el modelo interno de la API
 - **Builder Pattern**: Construcción de entidades con Lombok @Builder
 
-## Requisitos
+## ✅ Requisitos
 - Java 17
 - Docker Desktop
 - Maven
 
-## Instalación y Ejecución
+## 🚀 Instalación y Ejecución
 
-### 1. Clonar el repositorio
+### Opción 1: Docker (recomendado)
 ```bash
-git clone 
+docker compose up --build
+```
+
+### Opción 2: Local
+
+**1. Clonar el repositorio**
+```bash
+git clone https://github.com/janet0u0/ms-kpi
 cd ms-kpi
 ```
 
-### 2. Levantar MySQL con Docker
+**2. Levantar MySQL con Docker**
 ```bash
 docker-compose up -d
 ```
 
-### 3. Ejecutar el microservicio
+**3. Ejecutar el microservicio**
 ```bash
 .\mvnw spring-boot:run
 ```
+Disponible en `http://localhost:8082`
 
-El servicio quedará disponible en `http://localhost:8082`
-
-## Endpoints
+## 🔗 Endpoints
 
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
@@ -54,9 +60,9 @@ El servicio quedará disponible en `http://localhost:8082`
 | PUT | /api/kpis/{id} | Actualizar KPI |
 | DELETE | /api/kpis/{id} | Eliminar KPI |
 
-## Ejemplo de uso
+## 📝 Ejemplo de uso
 
-### Crear KPI
+**Crear KPI**
 ```json
 POST /api/kpis
 {
@@ -68,7 +74,8 @@ POST /api/kpis
 }
 ```
 
-### Tipos disponibles
+## 📋 Referencias
+
 | Tipo | Descripción |
 |------|-------------|
 | VENTAS | KPI de ventas |
@@ -76,43 +83,52 @@ POST /api/kpis
 | INVENTARIO | KPI de inventario |
 | LOGISTICA | KPI de logística |
 
-### Estados disponibles
 | Estado | Descripción |
 |--------|-------------|
 | VERDE | Óptimo |
 | AMARILLO | Precaución |
 | ROJO | Crítico |
 
-## Estructura del proyecto
-## Estructura del proyecto
+## 📂 Estructura del Proyecto
 
 ```text
 ms-kpi/
 ├── src/
 │   ├── main/
-│   │   ├── java/com/cordillera/mskpi/
-│   │   │   ├── controller/
-│   │   │   │   └── KpiController.java
-│   │   │   ├── dto/
-│   │   │   │   ├── KpiRequestDTO.java
-│   │   │   │   └── KpiResponseDTO.java
-│   │   │   ├── exception/
-│   │   │   │   └── ResourceNotFoundException.java
-│   │   │   ├── model/
-│   │   │   │   └── Kpi.java
-│   │   │   ├── repository/
-│   │   │   │   └── KpiRepository.java
-│   │   │   └── service/
-│   │   │       └── KpiService.java
-│   │   └── resources/
-│   │       └── application.properties
+│   │   ├── controller/
+│   │   │   └── KpiController.java
+│   │   ├── dto/
+│   │   │   ├── KpiRequestDTO.java
+│   │   │   └── KpiResponseDTO.java
+│   │   ├── exception/
+│   │   │   └── ResourceNotFoundException.java
+│   │   ├── model/
+│   │   │   └── Kpi.java
+│   │   ├── repository/
+│   │   │   └── KpiRepository.java
+│   │   └── service/
+│   │       └── KpiService.java
 │   └── test/
 ├── docker-compose.yml
+├── Dockerfile
 ├── pom.xml
 └── README.md
 ```
 
-## Monitoreo
+## 📌 Componentes principales
+
+```text
+controller/   → Endpoints REST
+dto/          → Transferencia de datos
+exception/    → Manejo de errores
+model/        → Entidades JPA
+repository/   → Acceso a base de datos
+service/      → Lógica de negocio
+resources/    → Configuración
+```
+
+## 📡 Monitoreo
+
 ```
 GET http://localhost:8082/actuator/health
 GET http://localhost:8082/actuator/info
